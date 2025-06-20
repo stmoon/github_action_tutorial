@@ -1,0 +1,50 @@
+name: ROS 2 CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-22.04
+
+    steps:
+    # 1) Git checkout
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 2) ROS 2 설치 (Humble)
+    - name: Setup ROS 2
+      uses: ros-tooling/setup-ros@v0.6
+      with:
+        required-ros-distributions: humble
+
+    # 3) rosdep 으로 의존성 설치
+    - name: Install dependencies
+      run: |
+        sudo apt update
+        rosdep update
+        rosdep install --from-paths src --ignore-src -r -y
+
+    # 4) colcon build
+    - name: Build workspace
+      run: |
+        source /opt/ros/humble/setup.bash
+        colcon build --event-handlers console_cohesion+
+
+    # 5) colcon test
+    - name: Run tests
+      run: |
+        source /opt/ros/humble/setup.bash
+        source install/setup.bash
+        colcon test
+
+    # 6) test 결과 요약
+    - name: Test result
+      run: |
+        source /opt/ros/humble/setup.bash
+        colcon test-result --verbose
