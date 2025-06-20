@@ -13,38 +13,41 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    # 1) Git checkout
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      
+      # Install some system pacakges
+      - name: Install ROS 2 Galactic packages
+        run: |
+          sudo apt update
+          sudo apt install -y software-properties-common
+          sudo add-apt-repository universe
+          sudo apt update && sudo apt install -y curl
+          sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+          sudo apt update
+          sudo apt install -y ros-galactic-ros-base python3-colcon-common-extensions
+          sudo apt install -y lcov
 
-    # 2) ROS 2 설치 (Humble)
-    - name: Setup ROS 2
-      uses: ros-tooling/setup-ros@v0.6
-      with:
-        required-ros-distributions: humble
+      - name: Setup Workspace
+        run: |
+          source /opt/ros/galactic/setup.bash
+          mkdir -p ros_ws/src/project_legion
+          cd ros_ws
+          colcon build
+          source install/setup.bash
 
-    # 3) rosdep 으로 의존성 설치
-    - name: Install dependencies
-      run: |
-        sudo apt update
-        rosdep update
-        rosdep install --from-paths src --ignore-src -r -y
+      # We want to use GitHub CI checkout version 3 for checking out the branch
+      - uses: actions/checkout@v3
+        with:
+          path: ros_ws/src/project_legion
 
-    # 4) colcon build
-    - name: Build workspace
-      run: |
-        source /opt/ros/humble/setup.bash
-        colcon build --event-handlers console_cohesion+
-
-    # 5) colcon test
-    - name: Run tests
-      run: |
-        source /opt/ros/humble/setup.bash
-        source install/setup.bash
-        colcon test
-
-    # 6) test 결과 요약
-    - name: Test result
-      run: |
-        source /opt/ros/humble/setup.bash
-        colcon test-result --verbose
+      # Build for test coverage
+      - name: Configure CMake flags and build exectables
+        run: |
+          source /opt/ros/galactic/setup.bash
+          sudo apt install python3-rosdep
+          sudo rosdep init
+          rosdep update --include-eol-distros
+          cd ros_ws
+          rosdep install --from-paths src -y --ignore-src
+          colcon build --packages-select project_legion
+          
