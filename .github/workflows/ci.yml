@@ -16,6 +16,7 @@ jobs:
             sudo apt install ros-humble-desktop
             sudo apt install ros-humble-ros-base
             sudo apt install ros-dev-tools
+            sudo apt install python3-rosdep
 
       - name: Setup Workspace
         run: |
@@ -30,4 +31,14 @@ jobs:
         with:
           repository: stmoon/github_action_tutorial
           path: ros_ws/src/github_action_tutorial
+
+      - name: Build
+        run: |
+          source /opt/ros/humble/setup.bash
+          sudo rosdep init
+          cd ros_ws
+          rosdep install --from-paths src -y --ignore-src
+          colcon build
+          
+          
 
