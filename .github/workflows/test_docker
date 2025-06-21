@@ -1,4 +1,4 @@
-name: ROS 2 CI
+name: Test in Docker 
 on:
   push:
 jobs:
