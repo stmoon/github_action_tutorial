@@ -17,7 +17,7 @@ jobs:
             sudo apt install ros-humble-ros-base
 
       - name: Setup Workspace
-          run: |
+        run: |
             source /opt/ros/humble/setup.bash
             mkdir -p ros_ws/src/project_legion
             cd ros_ws
