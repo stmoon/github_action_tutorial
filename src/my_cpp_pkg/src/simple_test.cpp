@@ -7,7 +7,7 @@ TEST(package_name, a_first_test)
 
 TEST(package_name, a_second_test)
 {
-  ASSERT_EQ(0, 2 / 2);
+  ASSERT_EQ(1, 2 / 2);
 }
 
 
