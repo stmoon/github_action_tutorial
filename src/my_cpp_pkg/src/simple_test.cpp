@@ -1,18 +1,18 @@
 #include <gtest/gtest.h>
 
-TEST(package_name, a_first_test)
+TEST(simple, test1)
 {
-  ASSERT_EQ(4, 2 + 2);
+    ASSERT_EQ(4, 2 + 2);
 }
 
-TEST(package_name, a_second_test)
+TEST(simple, test2)
 {
-  ASSERT_EQ(1, 2 / 2);
+    ASSERT_EQ(1, 2 / 2);
 }
 
 
 int main(int argc, char ** argv)
 {
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+    testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
 }
