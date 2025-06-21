@@ -13,24 +13,24 @@ jobs:
           use-ros2-testing: true
           required-ros-distributions: humble
 
-          - name: Setup Workspace
-          run: |
-              source /opt/ros/humble/setup.bash
-              mkdir -p ros_ws/src/github_action_tutorial
-              cd ros_ws
-              colcon build
-              source install/setup.bash
-  
-        - name: Checkout tools repo
-          uses: actions/checkout@v4
-          with:
-            repository: stmoon/github_action_tutorial
-            path: ros_ws/src/github_action_tutorial
-  
-        - name: Build
-          run: |
-            source /opt/ros/humble/setup.bash
-            cd ros_ws
-            rosdep update
-            rosdep install --from-paths src -y --ignore-src
-            colcon build
+      - name: Setup Workspace
+        run: |
+          source /opt/ros/humble/setup.bash
+          mkdir -p ros_ws/src/github_action_tutorial
+          cd ros_ws
+          colcon build
+          source install/setup.bash
+
+      - name: Checkout tools repo
+        uses: actions/checkout@v4
+        with:
+          repository: stmoon/github_action_tutorial
+          path: ros_ws/src/github_action_tutorial
+
+      - name: Build
+        run: |
+          source /opt/ros/humble/setup.bash
+          cd ros_ws
+          rosdep update
+          rosdep install --from-paths src -y --ignore-src
+          colcon build
