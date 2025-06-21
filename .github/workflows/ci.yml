@@ -1,6 +1,8 @@
 name: ROS 2 CI
 on:
   push:
+    branches:
+      - test
 jobs:
   build-and-test:
     name: Build and Test
