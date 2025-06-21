@@ -6,8 +6,7 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: awalsh128/cache-apt-pkgs-action@latest
-        with:
-          packages: dia doxygen doxygen-doc doxygen-gui doxygen-latex graphviz mscgen
-          version: 1.0
+      -name: Install ROS2
+       uses: awalsh128/cache-apt-pkgs-action@latest
+       with:
+          packages: ros-humble-desktop ros-humble-ros-base ros-dev-tools
