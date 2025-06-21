@@ -58,5 +58,5 @@ jobs:
           source /opt/ros/humble/setup.bash
           cd ros_ws
           source install/setup.bash
-          colon test
+          colcon test
           colcon test-result --verbose
