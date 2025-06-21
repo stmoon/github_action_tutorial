@@ -24,5 +24,10 @@ jobs:
             cd ros_ws
             colcon build
             source install/setup.bash
-            
+
+      - name: Checkout tools repo
+        uses: actions/checkout@v4
+        with:
+          repository: github_action_tutorial
+          path: ros_ws/src/github_action_tutorial
 
