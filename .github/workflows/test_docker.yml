@@ -12,10 +12,10 @@ jobs:
 
     steps:
 
-      - name: Check ROS Version
-        shell: bash
-        run: |
-          source /opt/ros/humble/setup.bash
+      # - name: Check ROS Version
+      #   shell: bash
+      #   run: |
+      #     source /opt/ros/humble/setup.bash
 
       # - uses: ros-tooling/setup-ros@v0.7
       #   with:
