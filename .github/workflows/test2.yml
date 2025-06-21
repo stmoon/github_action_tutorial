@@ -6,7 +6,7 @@ jobs:
     name: Build and Test
     runs-on: ubuntu-22.04
     steps:
-      - name: Install ROS2
+      - name: Prepare ROS2 Installation
         run: |
           sudo apt update && sudo apt install curl -y
           export ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F "tag_name" | awk -F\" '{print $4}')
@@ -14,6 +14,8 @@ jobs:
           sudo apt install /tmp/ros2-apt-source.deb
           sudo apt update
           sudo rosdep init
+          
+      - name: Install ROS2
         uses: awalsh128/cache-apt-pkgs-action@latest
         with:
           packages: ros-humble-desktop ros-humble-ros-base ros-dev-tools
