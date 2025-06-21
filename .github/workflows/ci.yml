@@ -20,7 +20,7 @@ jobs:
       - name: Setup Workspace
         run: |
             source /opt/ros/humble/setup.bash
-            mkdir -p ros_ws/src/project_legion
+            mkdir -p ros_ws/src/github_action_tutorial
             cd ros_ws
             colcon build
             source install/setup.bash
@@ -28,6 +28,6 @@ jobs:
       - name: Checkout tools repo
         uses: actions/checkout@v4
         with:
-          repository: github_action_tutorial
+          repository: stmoon/github_action_tutorial
           path: ros_ws/src/github_action_tutorial
 
