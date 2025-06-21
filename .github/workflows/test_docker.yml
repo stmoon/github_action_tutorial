@@ -13,6 +13,12 @@ jobs:
           use-ros2-testing: true
           required-ros-distributions: humble
 
+      - name: Install ROS2
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: ros-humble-desktop ros-humble-ros-base ros-dev-tools
+          version: 1.0
+
       - name: Setup Workspace
         run: |
           source /opt/ros/humble/setup.bash
