@@ -41,12 +41,12 @@ install(TARGETS simple
 
 if(BUILD_TESTING)
   find_package(ament_cmake_gtest REQUIRED)
-  ament_add_gtest(${PROJECT_NAME}_simple_test test/simple_test.cpp)
+  ament_add_gtest(${PROJECT_NAME}_simple_test src/simple_test.cpp)
   target_include_directories(${PROJECT_NAME}_simple_test PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
   )
-  target_link_libraries(${PROJECT_NAME}_simple_test name_of_local_library)
+  # target_link_libraries(${PROJECT_NAME}_simple_test name_of_local_library)
 endif()
 
 ament_package()
