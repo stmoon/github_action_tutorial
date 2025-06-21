@@ -51,3 +51,11 @@ jobs:
           # rosdep update
           # rosdep install --from-paths src -y --ignore-src
           colcon build
+
+      - name: Test
+        shell: bash
+        run: |
+          source /opt/ros/humble/setup.bash
+          cd ros_ws
+          colon test
+          colcon test-result --verbose
