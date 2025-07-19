@@ -26,5 +26,5 @@ jobs:
       - name: Build the Docker image
         run: |
           cd docker
-          docker build . --file Dockerfile --tag firesearch:latest
-          docker push ghcr.io/${{ github.repository_owner }}/firesearch:latest
+          docker build . --file Dockerfile --tag firesearch_wo_px4:latest
+          docker push ghcr.io/${{ github.repository_owner }}/firesearch_wo_px4:latest

@@ -49,23 +49,6 @@ RUN pip3 install -U \
     pytest-repeat \
     pytest-rerunfailures
 
-# Install Micro XRCE-DDS Agent v3.0.1
-RUN git clone --branch v3.0.1 https://github.com/eProsima/Micro-XRCE-DDS-Agent.git /tmp/Micro-XRCE-DDS-Agent \
-    && cd /tmp/Micro-XRCE-DDS-Agent && mkdir build && cd build \
-    && cmake .. && make -j$(nproc) && make install && ldconfig \
-    && rm -rf /tmp/Micro-XRCE-DDS-Agent
-
-# Install PX4 dependencies (no nuttx) and Gazebo Classic
-RUN git clone https://github.com/PX4/PX4-Autopilot.git /tmp/PX4-Autopilot \
-    && cd /tmp/PX4-Autopilot && bash ./Tools/setup/ubuntu.sh --no-nuttx \
-    && apt-get update && apt-get install -y aptitude \
-    && apt-get remove -y gz-harmonic || true \
-    && aptitude install -y gazebo libgazebo11 libgazebo-dev \
-    && rm -rf /tmp/PX4-Autopilot \
-    && apt-get -y autoremove \
-    && apt-get clean autoclean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
 # Passwordless sudo for 'user'
 RUN echo 'user ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/nopasswd \
     && chmod 440 /etc/sudoers.d/nopasswd
